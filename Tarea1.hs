@@ -24,7 +24,8 @@ module Tarea1
   , miFoldl
   ) where
 
-import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
+import Data.Char (isAlphaNum, isDigit, toLower, digitToInt, isSpace)
+import Distribution.Compat.Lens (_1)
 
 -- =====================================================================
 -- Parte A: recursión explícita.
@@ -34,7 +35,18 @@ import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 
 -- A1
 esPalindromo :: String -> Bool
-esPalindromo = undefined
+esPalindromo x = comparar(eliminarEspacios x )
+
+comparar :: String -> Bool
+comparar [] = True
+comparar [_] = True
+comparar (x:xs) = toLower x == toLower(last xs) && comparar (init xs)
+
+eliminarEspacios :: String -> String
+eliminarEspacios "" = ""
+eliminarEspacios (x:xs) 
+  | isSpace x = eliminarEspacios xs
+  | otherwise = x: eliminarEspacios xs
 
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
