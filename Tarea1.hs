@@ -7,6 +7,7 @@
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 
 --  Uso de gemini web para correcion de errores busqueda de funciones desconocidas(isSpace) y manejo de casos borde
+-- tambien manejo de case 
 
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -76,14 +77,20 @@ minimoAxiliar a b =
 
 leerHora :: String -> Either String (Int, Int)
 leerHora (a:b:':':c:d) = 
-  if (read [a,b] :: Int) > 23 then Left "hora fuera de rango"
-  else if length d > 1 then Left "formato inválido"
+  if length d > 1 then Left "formato inválido"
+  else if (read [a,b] :: Int) > 23 then Left "hora fuera de rango"
   else if (read ([c]++d) :: Int) > 59 then Left "minutos fuera de rango"
   else Right (read [a,b] :: Int ,read ([c]++d) :: Int)
 leerHora _ = Left "formato inválido"
 
 duracion :: String -> String -> Either String Int
-duracion = undefined
+duracion a b = case (leerHora a,leerHora b) of 
+  (Left error,Right hora) -> Left "formato inválido"
+  (Right hora,Left error) -> Left "formato inválido"
+  (Right hora1,Right hora2) -> if fst hora2 > fst hora1 then Right (((fst hora2 - fst hora1)*60) + (snd hora2 - snd hora1))
+                               else if fst hora1 == fst hora2 then if snd hora2 > snd hora1 then Right(snd hora2 - snd hora1) 
+                                                                   else Right(24*60 -(snd hora1-snd hora2) )
+                               else Right (((fst hora1 - fst hora2)-24)*(-60) - (snd hora1 - snd hora2))
 
 -- =====================================================================
 -- Parte B: orden superior.
