@@ -55,7 +55,17 @@ eliminarEspacios (x:xs)
 mayorYMenor :: Ord a => [a] -> Maybe (a, a)
 mayorYMenor [] = Nothing
 mayorYMenor [x] = Just (x,x)
-mayorYMenor (x:xs) = Just (max x a,min x b) where Just (a,b) = mayorYMenor xs
+mayorYMenor (x:xs) = Just (maximoAxiliar x a,minimoAxiliar x b) where Just (a,b) = mayorYMenor xs
+
+maximoAxiliar ::Ord x => x -> x -> x
+maximoAxiliar a b = 
+  if a > b then a 
+  else b 
+
+minimoAxiliar ::Ord x => x -> x -> x
+minimoAxiliar a b = 
+  if a > b then b 
+  else a   
 
 -- A3
 leerHora :: String -> Either String (Int, Int)
