@@ -5,7 +5,9 @@
 --  Carnet: 2210439
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
---
+
+--  Uso de gemini web para correcion de errores busqueda de funciones desconocidas(isSpace) y manejo de casos borde
+
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
 --  firmas de las funciones. Puedes agregar todas las funciones auxiliares
@@ -26,6 +28,7 @@ module Tarea1
 
 import Data.Char (isAlphaNum, isDigit, toLower, digitToInt, isSpace)
 import Distribution.Compat.Lens (_1)
+import Control.Arrow (ArrowChoice(right))
 
 -- =====================================================================
 -- Parte A: recursión explícita.
@@ -51,7 +54,9 @@ eliminarEspacios (x:xs)
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
 -- lista una sola vez:
---
+--  Esta funcion la recorre completa, llega hasta el ultimo elento y este pasa a ser el mayor y el menor, posteriormente
+--  solo vamos haciendo volviendo hacia atras para comparar
+
 mayorYMenor :: Ord a => [a] -> Maybe (a, a)
 mayorYMenor [] = Nothing
 mayorYMenor [x] = Just (x,x)
@@ -68,8 +73,14 @@ minimoAxiliar a b =
   else a   
 
 -- A3
+
 leerHora :: String -> Either String (Int, Int)
-leerHora = undefined
+leerHora (a:b:':':c:d) = 
+  if (read [a,b] :: Int) > 23 then Left "hora fuera de rango"
+  else if length d > 1 then Left "formato inválido"
+  else if (read ([c]++d) :: Int) > 59 then Left "minutos fuera de rango"
+  else Right (read [a,b] :: Int ,read ([c]++d) :: Int)
+leerHora _ = Left "formato inválido"
 
 duracion :: String -> String -> Either String Int
 duracion = undefined
