@@ -6,8 +6,8 @@
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 
---  Uso de gemini web para correcion de errores busqueda de funciones desconocidas(isSpace) y manejo de casos borde
--- tambien manejo de case 
+--  Uso de gemini web para correcion de errores busqueda de funciones desconocidas(isSpace,fromIntegral) y manejo de casos borde
+-- tambien manejo de case y uso de listas por comprension
 
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -100,7 +100,11 @@ duracion a b = case (leerHora a,leerHora b) of
 
 -- B1
 promedioSobreUmbral :: Double -> [Double] -> Maybe Double
-promedioSobreUmbral = undefined
+promedioSobreUmbral x ys = if null mayores then Nothing else Just ((foldr (+) 0 mayores) / fromIntegral(length mayores)) where mayores = sumarMayores x ys
+
+sumarMayores :: Double -> [Double] ->  [Double]
+sumarMayores _ [] = []
+sumarMayores x ys =  [y | y <- ys, y > x]
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
