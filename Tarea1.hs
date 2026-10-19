@@ -120,10 +120,14 @@ eliminarRepeticion (x:xs) = x: eliminarRepeticion(filter (/= x) xs)
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
-miMap = undefined
+miMap _ [] = []
+miMap f (x:xs) = f x : miMap f xs 
 
 miFilter :: (a -> Bool) -> [a] -> [a]
-miFilter = undefined
+miFilter _ [] = []
+miFilter p (x:xs) 
+  | p x = x:miFilter p xs
+  | otherwise = miFilter p xs
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
 miFoldl = undefined
