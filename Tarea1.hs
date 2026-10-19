@@ -109,10 +109,15 @@ sumarMayores x ys =  [y | y <- ys, y > x]
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo x = [ (fst x + fst y,snd x + snd y) | y <-[(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)], (0 < fst x + fst y && fst x + fst y <= 8) && (0 < snd x + snd y && snd x + snd y <= 8) ]
+movimientosCaballo (x,y) = [ (x+r,y+c) | (r,c) <-[(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)], (0 < x+r && x+r <= 8) && (0 < y+c && y+c <= 8) ]
 
 enDosSaltos :: (Int, Int) -> Int
-enDosSaltos x = length movimientos where movimientos = concatMap movimientosCaballo (movimientosCaballo x)
+enDosSaltos x = length (eliminarRepeticion movimientos) where movimientos = concatMap movimientosCaballo (movimientosCaballo x)
+
+eliminarRepeticion :: (Eq a) => [a] -> [a]
+eliminarRepeticion [] = []
+eliminarRepeticion (x:xs) = x: eliminarRepeticion(filter (/= x) xs)
+
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
 miMap = undefined
