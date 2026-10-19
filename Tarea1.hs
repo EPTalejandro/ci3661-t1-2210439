@@ -100,7 +100,8 @@ duracion a b = case (leerHora a,leerHora b) of
 
 -- B1
 promedioSobreUmbral :: Double -> [Double] -> Maybe Double
-promedioSobreUmbral x ys = if null mayores then Nothing else Just ((foldr (+) 0 mayores) / fromIntegral(length mayores)) where mayores = sumarMayores x ys
+promedioSobreUmbral x ys = if null mayores then Nothing 
+                           else Just ((foldr (+) 0 mayores) / fromIntegral(length mayores)) where mayores = sumarMayores x ys
 
 sumarMayores :: Double -> [Double] ->  [Double]
 sumarMayores _ [] = []
@@ -108,11 +109,10 @@ sumarMayores x ys =  [y | y <- ys, y > x]
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo = undefined
+movimientosCaballo x = [ (fst x + fst y,snd x + snd y) | y <-[(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)], (0 < fst x + fst y && fst x + fst y <= 8) && (0 < snd x + snd y && snd x + snd y <= 8) ]
 
 enDosSaltos :: (Int, Int) -> Int
-enDosSaltos = undefined
-
+enDosSaltos x = length movimientos where movimientos = concatMap movimientosCaballo (movimientosCaballo x)
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
 miMap = undefined
