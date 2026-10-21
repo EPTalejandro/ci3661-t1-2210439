@@ -6,7 +6,7 @@
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 
---  Uso de gemini web para correcion de errores busqueda de funciones desconocidas(isSpace,fromIntegral) y manejo de casos borde
+--  Uso de gemini web para correcion de errores busqueda de funciones desconocidas(isSpace,fromIntegral,flip,reverse) y manejo de casos borde
 -- tambien manejo de case y uso de listas por comprension
 
 -- =====================================================================
@@ -126,4 +126,4 @@ miFilter :: (a -> Bool) -> [a] -> [a]
 miFilter p xs = foldr ((\x acc -> if p x then x : acc else acc)) [] xs
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
-miFoldl = undefined
+miFoldl f x xs = foldr (flip f) x (reverse xs)

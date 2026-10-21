@@ -33,3 +33,24 @@ caso estamos trabajando con una operacion que no es asociativa, osea dependiendo
 se asocien los datos la operacion va a cambiar. lo cual nos lleva a la condicion para que foldr y foldl
 den el mismo resultado, que op sea una operacion asociativa y el elemento z sea el elemento
 neutro de dicha operacion, para que no modifique el resultado 
+
+
+desarrollo de miFoldl
+
+miFold (-) 0 [0,4]
+
+primero voltea la lista asi que pasa asi
+
+miFoldl (-) 0 [4,0]
+
+flip (-) 4 (miFoldl (0) [0])
+
+flip (-) 4 (0 flip (-) miFoldl (-) [] )
+
+flip (-) 4 ( flip (-)0 0)
+
+flip (-) 4 0 
+
+(-) 0 4
+
+= -4
